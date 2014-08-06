@@ -21,7 +21,7 @@ while ischar(tline)
 			tline = [tline(1:st(j)-1+(j-1)) '%' tline(st(j)+(j-1):end)];
 	end
 
-	s = ['s = strcat(s,''' tline ''');\n'];
+	s = ['s = strcat(s,''' tline ''','' \\n '');  \n'];
 	fprintf(opFile,s);	
 	tline = fgetl(ipFile);
 end
