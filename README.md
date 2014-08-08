@@ -30,6 +30,7 @@ Adding text comments
 --------------------
 
 nbPrms = get\_prms({'nbName','my-notebook'});
+
 comment(nbPrms,{'type','comment','text','This is my first comment'});
 
 
@@ -37,9 +38,11 @@ Adding figures
 ---------------
 
  - Provide a figure handle in which plot has been created
+	
 	 comment(nbPrms,{'type','figure','figHandle',gcf,'text','Mu first figure caption'});
 
  - Provide an already saved figure
+	
 	 comment(nbPrms,{'type','figure','figFile','name-of-file','text','Figure caption'});
 
 
