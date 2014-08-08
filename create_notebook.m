@@ -11,7 +11,8 @@ function [] = create_notebook(varargin)
 % 6. Each saved figure will be saved as: FigureNumber.pdf
 % 7. A time stamp shall appear with all comments/tables/figures etc
 
-dfs = {'name','my_notebook'};
+dfs = {'name','my-notebook','author','default',...
+			 'title',''};
 dfs = get_defaults(varargin,dfs,true);
 
 prms = get_prms({'nbName',dfs.name});
@@ -38,7 +39,13 @@ system(['mkdir -p ' prms.paths.nbData]);
 typeIndex = []; %Comment number of a particular type. 
 type      = {}; %Type of comment being stored
 ts        = {}; %Time Stamp
-save(prms.paths.nbInfo,'typeIndex','type','-v7.3');
+author    = dfs.author;
+if isempty(dfs.title)
+	title = dfs.name;
+else
+	title = dfs.title;
+end
+save(prms.paths.nbInfo,'typeIndex','type','ts','title','author','-v7.3');
 
 
 end

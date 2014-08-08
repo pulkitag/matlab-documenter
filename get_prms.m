@@ -24,7 +24,13 @@ function [prms] = get_prms(varargin)
 
 	figDir             =  fullfile(prms.paths.nbData,'figure');
 	prms.paths.figFile =  fullfile(figDir,'%d.pdf');
-	if ~exist(prms.paths.figFile)
+	if ~exist(figDir)
 		system(['mkdir -p ' figDir]);
+	end
+
+	%Additional texfiles paths
+	prms.paths.texDir = fullfile(prms.paths.data,'tex_data');
+	if ~exist(prms.paths.texDir)
+		system(['mkdir -p ' prms.paths.texDir]);
 	end
 end

@@ -1,12 +1,35 @@
 function [] = make_tex(prms)
 %Generates the tex file from the notes structure.
 
-dfs = {'commentType','comment'};
-varargin = get_defaults(varargin,dfs,true);
+%Get the notebook data
+nbData = load(prms.paths.nbInfo);
 
-[key,timeStamp] = get_identifier();
+%Open the texfile
+fid    = fopen(prms.paths.nbTex,'w');
 
+%Get the preamble
+s   = get_tex(prms,{'texType','preamble','author',nbData.author,'title',nbData.title});
+fprintf(fid,s); 
 
+%Write the Comments
+for i=1:1:length(nbData.type)
+	idx = nbData.typeIndex(i);
+	switch nbData.type{i}
+		case 'comment'
+			s = get_tex(prms,{'texType','comment','text',nbData.comment(idx).text});
+		case 'figure'
+			s = get_tex(prms,{'texType','figure','figNum',idx,...
+						'figFile',nbData.figure(idx).file,...
+						'figCaption',nbData.figure(idx).caption});
+		otherwise
+			error('Not Recognized')
+	end
+	fprintf(fid,s);
+end
+
+s = get_tex(prms,{'texType','end'});
+fprintf(fid,s);
+fclose(fid);
 end
 
 
