@@ -14,33 +14,31 @@ function [] = create_notebook(varargin)
 dfs = {'name','my_notebook'};
 dfs = get_defaults(varargin,dfs,true);
 
-prms = get_prms({'name',dfs.name});
+prms = get_prms({'nbName',dfs.name});
 
 %Get the file for updating the notebook names
-if ~exist((prms.paths.nbList,'file')==2)
-	nbFid = fopen(prms.paths.nbList,'w');
+if exist(prms.paths.nbList,'file')==2
+	oldNb = load(prms.paths.nbList);
+	assert(isempty(intersect(oldNb.nbNames,dfs.name)),'Notebook alreadt exists');
+	nbNames = oldNb.nbNames;
+	nbNames{end+1} = dfs.name;
+	save(prms.paths.nbList,'nbNames','-v7.3');
 else
-	nbFid = fopen(prms.paths.nbList,'ra');
-	%Read the existing notebook names and make sure its a new-name. 
-	nextLine = fgets(nbFid);
-	while ischar(nextLine)
-		if strcmp(nextLine(1:end-2),dfs.name)
-			error('Name already exists');
-		end
-	end
+	nbNames{1} = dfs.name;
+	save(prms.paths.nbList,'nbNames','-v7.3');
 end
 
 %Create the notebook folder
-system(['mkdir -P ' prms.paths.nb]); 
+system(['mkdir -p ' prms.paths.nb]); 
 
 %Create the notebook data folder
-system(['mkdir -P ' prms.paths.nbData]); 
+system(['mkdir -p ' prms.paths.nbData]); 
 
-%Create main.tex
-fid = fopen(prms.paths.nbTexFile,'w');
-[texStr,numLines] = get_tex({'texType','preamble'});
-fprintf(fid,texStr);
-
+%Create the struct for storing the comments. 
+typeIndex = []; %Comment number of a particular type. 
+type      = {}; %Type of comment being stored
+ts        = {}; %Time Stamp
+save(prms.paths.nbInfo,'typeIndex','type','-v7.3');
 
 
 end

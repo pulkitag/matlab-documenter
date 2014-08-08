@@ -1,10 +1,5 @@
-function [] = write_tex(prms,s,varargin)
-% writes data to tex file, each note is preceded by a begin and end comment which contains the id number of the note. 
-% Possible comment types:
-% 1. comment
-% 2. table
-% 3. figure
-% 4. init % Special tag while initializing the notebook
+function [] = make_tex(prms)
+%Generates the tex file from the notes structure.
 
 dfs = {'commentType','comment'};
 varargin = get_defaults(varargin,dfs,true);
