@@ -15,7 +15,7 @@ dfs = {'name','my-notebook','author','default',...
 			 'title',''};
 dfs = get_defaults(varargin,dfs,true);
 
-prms = get_prms({'nbName',dfs.name});
+prms = get_nb_prms({'nbName',dfs.name});
 
 %Get the file for updating the notebook names
 if exist(prms.paths.nbList,'file')==2

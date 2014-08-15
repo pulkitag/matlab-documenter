@@ -22,14 +22,14 @@ All style files required by tex should be stored in path-to-matlab-documenter-da
 Create a notebook
 ------------------
 
-nb = create\_notebook({'name','my-notebook','author','author-name','title','title-of-my-motebook'});
+create\_notebook({'name','my-notebook','author','author-name','title','title-of-my-motebook'});
 
 
 
 Adding text comments
 --------------------
 
-nbPrms = get\_prms({'nbName','my-notebook'});
+nbPrms = get\_nb\_prms({'nbName','my-notebook'});
 
 comment(nbPrms,{'type','comment','text','This is my first comment'});
 

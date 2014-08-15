@@ -1,4 +1,4 @@
-function [prms] = get_prms(varargin)
+function [prms] = get_nb_prms(varargin)
 
 	dfs = {'nbName','%s'};
 	dfs = get_defaults(varargin,dfs,true);
