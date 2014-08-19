@@ -4,14 +4,14 @@ function [s] = get_tex(prms,varargin)
 
 dfs = {'texType',[],'numFigure',1,'author','','title','',...
 			 'figNum','','figFile','','figCaption','','figWidth',1.0,...
-			 'text',''};
+			 'text','','stylePkg','nips14submit_e'};
 dfs = get_defaults(varargin,dfs,true);
 
 s = '';
 switch dfs.texType
 	case 'preamble'
 		s = strcat(s,' \\documentclass{article} %% For LaTeX2e',' \n ');  
-		s = strcat(s,' \\usepackage{', fullfile(prms.paths.texDir,'nips14submit_e'),...
+		s = strcat(s,' \\usepackage{', fullfile(prms.paths.texDir,dfs.stylePkg),...
 					',times}',' \n ');  
 		s = strcat(s,' \\usepackage{hyperref}',' \n ');  
 		s = strcat(s,' \\usepackage{url}',' \n ');  

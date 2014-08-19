@@ -9,13 +9,14 @@ Requirements
 	- export\_fig
 	- pdflatex
 	- convert
-
+	- texlive-fonts-recommended
+	- texlive-science
 
 Setup
 -------
 
 You need to specify the path where you want matlab-documenter to save its internal data.
-Modify prms.paths.data in get\_prms.m to suit your needs. You dont need to modify anything else. 
+Modify user\_configs to set the user variables. You dont need to modify anything else. 
 
 All style files required by tex should be stored in path-to-matlab-documenter-data/tex\_data/
 
@@ -55,4 +56,15 @@ Tex file will be generated in path-to-matlab-documenter-data/my-notebook/
 
 Use pdflatex to get your .pdf documentation!
 
+
+Fixes to possible errors
+-------------------------
+
+Error in using evince over ssh -X, try the following:
+
+sudo ln -s /etc/apparmor.d/usr.bin.evince /etc/apparmor.d/disable
+
+sudo /etc/init.d/apparmor restart
+
+Also, in /etc/init.d/apparmor/tunables/home - ensure that your home directory is listed in HOME variable.
 

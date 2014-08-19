@@ -3,8 +3,11 @@ function [prms] = get_nb_prms(varargin)
 	dfs = {'nbName','%s'};
 	dfs = get_defaults(varargin,dfs,true);
 
+	%Get user configurations
+	cnf = user_configs();
+
 	%Specify the directory where you want the documentation data to be stored. 
-	prms.paths.data   = '/auto/k1/pulkit/Documentation/matlab/';
+	prms.paths.data   = cnf.dataDir;
 
 	%List of all notebooks
 	prms.paths.nbList = fullfile(prms.paths.data,'nb_list.mat'); 
@@ -14,6 +17,10 @@ function [prms] = get_nb_prms(varargin)
 
 	%Notebook tex file
 	prms.paths.nbTex  = fullfile(prms.paths.nb,'main.tex');
+
+	%Notebook pdf file
+	prms.paths.nbTex  = fullfile(prms.paths.nb,'main.pdf');
+
 
 	%Notebook info file
 	prms.paths.nbInfo = fullfile(prms.paths.nb,'info.mat'); 

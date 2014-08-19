@@ -4,11 +4,15 @@ function [] = make_tex(prms)
 %Get the notebook data
 nbData = load(prms.paths.nbInfo);
 
+%Get user_configs
+cnf = user_configs();
+
 %Open the texfile
 fid    = fopen(prms.paths.nbTex,'w');
 
 %Get the preamble
-s   = get_tex(prms,{'texType','preamble','author',nbData.author,'title',nbData.title});
+s   = get_tex(prms,{'texType','preamble','author',nbData.author,'title',nbData.title,...
+					'stylePkg',cnf.stylePkg});
 fprintf(fid,s); 
 
 %Write the Comments
