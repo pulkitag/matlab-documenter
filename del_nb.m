@@ -16,7 +16,6 @@ else
 		return;
 	end	
 	system(['rm -r ' prms.paths.nb]);
-	system(['rm -r ' prms.paths.nbData]);
 
 	[~,ia] = intersect(oldNb.nbNames,dfs.nbName,'stable');
 	nbNames = cell(length(oldNb.nbNames)-1,1);
@@ -25,7 +24,7 @@ else
 		if i==ia
 			continue;
 		end
-		nbNames = oldNb.nbNames{i}
+		nbNames = oldNb.nbNames{i};
 	end
 
 	save(prms.paths.nbList,'nbNames','-v7.3');
