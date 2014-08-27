@@ -1,7 +1,7 @@
 function [] = document(prms,varargin)
 
 dfs = {'type','comment','figHandle',[],'figFile','',...
-			 'text',''};
+			 'text','','subcaption',''};
 dfs = get_defaults(varargin,dfs,true);
 
 nbData = load(prms.paths.nbInfo);
@@ -15,22 +15,46 @@ switch dfs.type
 		end
 		nbData.comment(typeIndex+1).text = dfs.text;
 	
-	case 'figure'
+	case {'figure','multifigure'}
 		if isfield(nbData,'figure')
 			typeIndex = length(nbData.figure);
 		else
 			typeIndex = 0;
 		end
-		figName = sprintf(prms.paths.figFile,typeIndex + 1);
 		nbData.figure(typeIndex+1).caption = dfs.text;
-		nbData.figure(typeIndex+1).file    = figName;
-		if ~isempty(dfs.figHandle)
-				assert(isempty(dfs.figFile),'Cannot specify figName and handle simultaneously');
-				export_fig(dfs.figHandle,figName,'-q25');
+	
+		if strcmp(dfs.type,'figure')	
+			figName = sprintf(prms.paths.figFile,typeIndex + 1);
+			nbData.figure(typeIndex+1).isMulti    = false;
+			nbData.figure(typeIndex+1).subCaption = {};		
+	
+			if ~isempty(dfs.figHandle)
+					assert(isempty(dfs.figFile),'Cannot specify figName and handle simultaneously');
+					export_fig(dfs.figHandle,figName,'-q25');
+			else
+					%Convert the file
+					system(['convert ' dfs.figFile ' ' figName]); 
+			end
 		else
-				%Convert the file
-				system(['convert ' dfs.figFile ' ' figName]); 
+			%For making multiple figures.
+			assert(iscell(dfs.figHandle),'figHandle must be a cell for multi-figure');
+			figName = sprintf(prms.paths.multiFigFile,typeIndex + 1,'%d');
+					
+			nbData.figure(typeIndex+1).isMulti = true;
+		
+			[dirName,~,~] = fileparts(figName);
+			if ~(exist(dirName,'dir')==7)
+				system(['mkdir -p ' dirName]);
+			end
+			for n=1:1:length(dfs.figHandle)
+				fName = sprintf(figName,n);
+				export_fig(dfs.figHandle{n}, fName, '-q25');
+				nbData.figure(typeIndex+1).subcaption{n} = dfs.subcaption{n};
+			end
 		end		
+		
+		%Record the name of the figure. 
+		nbData.figure(typeIndex+1).file    = figName;
 
 	case 'table'
 		error('Not Implemented');

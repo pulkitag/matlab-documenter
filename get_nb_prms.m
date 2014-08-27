@@ -31,6 +31,7 @@ function [prms] = get_nb_prms(varargin)
 
 	figDir             =  fullfile(prms.paths.nbData,'figure');
 	prms.paths.figFile =  fullfile(figDir,'%d.pdf');
+	prms.paths.multiFigFile =  fullfile(figDir,'multi%d/%s.pdf');
 	if ~exist(figDir)
 		system(['mkdir -p ' figDir]);
 	end

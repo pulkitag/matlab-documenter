@@ -11,21 +11,21 @@ function [] = create_notebook(varargin)
 % 6. Each saved figure will be saved as: FigureNumber.pdf
 % 7. A time stamp shall appear with all comments/tables/figures etc
 
-dfs = {'name','my-notebook','author','default',...
+dfs = {'nbName','my-notebook','author','default',...
 			 'title',''};
 dfs = get_defaults(varargin,dfs,true);
 
-prms = get_nb_prms({'nbName',dfs.name});
+prms = get_nb_prms({'nbName',dfs.nbName});
 
 %Get the file for updating the notebook names
 if exist(prms.paths.nbList,'file')==2
 	oldNb = load(prms.paths.nbList);
-	assert(isempty(intersect(oldNb.nbNames,dfs.name)),'Notebook alreadt exists');
-	nbNames = oldNb.nbNames;
-	nbNames{end+1} = dfs.name;
+	assert(isempty(intersect(oldNb.nbNames,dfs.nbName)),'Notebook alreadt exists');
+	nbNames = {oldNb.nbNames{:}};
+	nbNames{end+1} = dfs.nbName;
 	save(prms.paths.nbList,'nbNames','-v7.3');
 else
-	nbNames{1} = dfs.name;
+	nbNames{1} = dfs.nbName;
 	save(prms.paths.nbList,'nbNames','-v7.3');
 end
 
@@ -41,7 +41,7 @@ type      = {}; %Type of comment being stored
 ts        = {}; %Time Stamp
 author    = dfs.author;
 if isempty(dfs.title)
-	title = dfs.name;
+	title = dfs.nbName;
 else
 	title = dfs.title;
 end

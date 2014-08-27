@@ -24,7 +24,7 @@ else
 		if i==ia
 			continue;
 		end
-		nbNames = oldNb.nbNames{i};
+		nbNames{i} = oldNb.nbNames{i};
 	end
 
 	save(prms.paths.nbList,'nbNames','-v7.3');
