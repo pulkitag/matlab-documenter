@@ -40,7 +40,8 @@ switch dfs.type
 			assert(iscell(dfs.figHandle),'figHandle must be a cell for multi-figure');
 			figName = sprintf(prms.paths.multiFigFile,typeIndex + 1,'%d');
 					
-			nbData.figure(typeIndex+1).isMulti = true;
+			nbData.figure(typeIndex+1).isMulti  = true;
+			nbData.figure(typeIndex+1).numFig   = length(dfs.figHandle);
 		
 			[dirName,~,~] = fileparts(figName);
 			if ~(exist(dirName,'dir')==7)
@@ -49,7 +50,10 @@ switch dfs.type
 			for n=1:1:length(dfs.figHandle)
 				fName = sprintf(figName,n);
 				export_fig(dfs.figHandle{n}, fName, '-q25');
-				nbData.figure(typeIndex+1).subcaption{n} = dfs.subcaption{n};
+				if ~isempty(dfs.subcaption)
+					%This gives the user the option of not providing any subcaptions
+					nbData.figure(typeIndex+1).subcaption{n} = dfs.subcaption{n};
+				end
 			end
 		end		
 		

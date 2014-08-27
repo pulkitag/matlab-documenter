@@ -25,6 +25,18 @@ for i=1:1:length(nbData.type)
 			s = get_tex(prms,{'texType','figure','figNum',idx,...
 						'figFile',nbData.figure(idx).file,...
 						'figCaption',nbData.figure(idx).caption});
+
+		case 'multifigure'
+			figCaption    = nbData.figure(idx).caption;
+			figFile       = nbData.figure(idx).file;
+			figSubcaption = nbData.figure(idx).subcaption;
+			numFig        = nbData.figure(idx).numFig;
+			figNr         = 2;
+			figNc         = 2;
+			s = get_tex(prms,{'texType','multifigure','figNum',idx,...
+												'figFile',figFile,'numFig',numFig,...
+												'figCaption',figCaption,'figSubcaption',figSubcaption,...
+												'figNr',figNr,'figNc',figNc});
 		otherwise
 			error('Not Recognized')
 	end

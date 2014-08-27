@@ -19,7 +19,7 @@ function [prms] = get_nb_prms(varargin)
 	prms.paths.nbTex  = fullfile(prms.paths.nb,'main.tex');
 
 	%Notebook pdf file
-	prms.paths.nbTex  = fullfile(prms.paths.nb,'main.pdf');
+	prms.paths.nbPdf  = fullfile(prms.paths.nb,'main.pdf');
 
 
 	%Notebook info file
