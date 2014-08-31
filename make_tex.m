@@ -31,12 +31,13 @@ for i=1:1:length(nbData.type)
 			figFile       = nbData.figure(idx).file;
 			figSubcaption = nbData.figure(idx).subcaption;
 			numFig        = nbData.figure(idx).numFig;
-			figNr         = 2;
-			figNc         = 2;
+			figNr         = nbData.figure(idx).arrange(1);
+			figNc         = nbData.figure(idx).arrange(2);
 			s = get_tex(prms,{'texType','multifigure','figNum',idx,...
 												'figFile',figFile,'numFig',numFig,...
 												'figCaption',figCaption,'figSubcaption',figSubcaption,...
 												'figNr',figNr,'figNc',figNc});
+			s = strcat(s,get_tex(prms,{'texType','clearpage'}));
 		otherwise
 			error('Not Recognized')
 	end

@@ -50,10 +50,10 @@ switch dfs.texType
 		nc = dfs.figNc;
 		
 		%Calculate the gap space between figures
-		horGapSpace = 0.01*nc;	
+		horGapSpace = 0.01;	
 
 		%width of each image
-		imWidth = (dfs.figWidth - horGapSpace)/nc;
+		imWidth = (dfs.figWidth - horGapSpace*nc)/nc;
 
 		count = 1;
 		for r=1:1:nr
@@ -62,10 +62,19 @@ switch dfs.texType
 					continue;
 				end
 				fName = sprintf(dfs.figFile,count);
-				s = strcat(s,'\\subfloat{\\includegraphics',...
-										 sprintf('[width=%.3f',imWidth), '\\linewidth]',...
-										 sprintf('{%s}',fName),...
-										 '\\',sprintf('hspace{%.2f',horGapSpace),'\\linewidth} }');
+				if isempty(dfs.figSubcaption)
+					s = strcat(s,'\\subfloat{\\includegraphics',...
+											 sprintf('[width=%.3f',imWidth), '\\linewidth]',...
+											 sprintf('{%s}',fName),...
+											 '\\',sprintf('hspace{%.2f',horGapSpace),'\\linewidth} }');
+				else
+					s = strcat(s,'\\',sprintf('subfloat[%s]',dfs.figSubcaption{count}),...
+											'{\\includegraphics',...
+											 sprintf('[width=%.3f',imWidth), '\\linewidth]',...
+											 sprintf('{%s}',fName),...
+											 '\\',sprintf('hspace{%.2f',horGapSpace),'\\linewidth} }');
+				end
+				
 
 				if c<nc
 					s = strcat(s,' \n');
@@ -80,6 +89,9 @@ switch dfs.texType
 		s = strcat(s, sprintf('\\'), sprintf('\\label{fig:figure%d}',dfs.figNum), ' \n ');
 		s = strcat(s,'\\end{figure} \n ');
 	
+
+	case 'clearpage'
+		s = strcat(s,'\\clearpage \n');
 
 	case 'multifigureHor'
 		%When you want to place multiple figures side to side horizontally

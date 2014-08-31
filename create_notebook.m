@@ -14,6 +14,7 @@ function [] = create_notebook(varargin)
 dfs = {'nbName','my-notebook','author','default',...
 			 'title',''};
 dfs = get_defaults(varargin,dfs,true);
+assert(isstr(dfs.nbName),'Name of the notebook must be a string');
 
 prms = get_nb_prms({'nbName',dfs.nbName});
 

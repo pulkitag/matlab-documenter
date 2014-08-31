@@ -20,6 +20,7 @@ document(nbPrms,{'type','figure','figHandle',fig,'text','Sample Figure - Random 
 numFigs = 4;
 figHandle  = cell(numFigs,1);
 subcaption = cell(numFigs,1);
+figArrange = [2 2];
 for i=1:1:numFigs
 	im = uint8(255*rand(255,255,3));
 	figHandle{i}  = figure();
@@ -27,4 +28,5 @@ for i=1:1:numFigs
 	subcaption{i} = sprintf('Random Noise: %d',i);
 end
 document(nbPrms,{'type','multifigure','figHandle',figHandle,...
-						'text','Sample Figure - Random Noise','subcaption',subcaption});
+						'text','Sample Figure - Random Noise','subcaption',subcaption,...
+						'figArrange',figArrange});

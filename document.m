@@ -1,7 +1,7 @@
 function [] = document(prms,varargin)
 
 dfs = {'type','comment','figHandle',[],'figFile','',...
-			 'text','','subcaption',''};
+			 'text','','subcaption','','figArrange',[]};
 dfs = get_defaults(varargin,dfs,true);
 
 nbData = load(prms.paths.nbInfo);
@@ -42,7 +42,14 @@ switch dfs.type
 					
 			nbData.figure(typeIndex+1).isMulti  = true;
 			nbData.figure(typeIndex+1).numFig   = length(dfs.figHandle);
-		
+
+			if isempty(dfs.figArrange)
+				figArrange = [length(dfs.figHandle) 1];
+			else	
+				figArrange = dfs.figArrange;
+			end	
+			nbData.figure(typeIndex+1).arrange = figArrange;
+			
 			[dirName,~,~] = fileparts(figName);
 			if ~(exist(dirName,'dir')==7)
 				system(['mkdir -p ' dirName]);
